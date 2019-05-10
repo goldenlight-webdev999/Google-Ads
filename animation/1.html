@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>05 PBS Digital Banner</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>	
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+	<style type="text/css">
+		.banner {
+			width: 970px;
+			height: 90px;
+			background-image: url(../img/pattern-970x90.jpg);
+			position: relative;
+			font-family: Open Sans;
+			font-weight: bold; 	
+			color: #fff;
+			text-transform: uppercase;
+			overflow: hidden;
+		}
+		#copy-1 {
+			position: absolute;		
+			top: 10px;
+			font-size: 50px;
+			left: 200px;
+		}
+		#copy-2 {
+			position: absolute;		
+			top: 5px;
+			font-size: 55px;
+			left: 50px;
+		}
+		#logo{
+			position: absolute;
+			left: 100px;
+			top: 10px;
+			display: none;		
+		}
+		.show {
+			display: block;
+		}
+		#title {
+			position: absolute;
+			color: #fff;
+			font-size: 40px;
+			left: 260px;
+			top: 15px;
+			text-transform: none;
+			display: none;
+		}
+		#button {
+			position: absolute;
+			width: 200px;
+			right: 150px;
+			top: 100%;	
+			display: none;	
+		}
+		#button img {
+			width: 100%;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+		<div id="copy-1"></div>
+		<div id="copy-2"></div>
+		<div id="logo"><img src="img/logo.png"></div>
+		<div id="title">
+			<span>PBS.National Sales</span>
+		</div>
+		<div id="button">
+			<a href="#"><img src="img/button.png"></a>
+		</div>
+	</div>
+	<script type="text/javascript">
+
+	    var text1 = 'Stories Start Here';
+	    var text2= 'Capture Engaged Audiences';
+	    var copy_1_timeOut = 3000+1000;
+	    var copy_2_timeOut = 3000;
+	    var logo_timeOut = copy_1_timeOut+copy_2_timeOut+500;
+	    var title_timeOut = logo_timeOut + 500;
+	    var button_timeOut = title_timeOut + 500;
+	    var hide_timeOut = button_timeOut + 3000;
+
+	    $(document).ready(function(){	    	
+	    	copy_1();
+	    	copy_2();
+	    	logo();
+	    	title();
+	    	button();
+	    	hide_ele();
+	    });
+	    
+
+	    function copy_1(){
+	    	var textElements1 = text1.split("").map(function(c) {
+			  return $('<span id="' + c + '">' + c + '</span>');
+			});
+
+			var el = $('#copy-1');
+			el.animate({left:"150",top:"0",zoom:1.2}, 3000);
+			var delay = 100; // Tune this for different letter delays.
+			textElements1.forEach(function(e, i) {
+			  el.append(e);
+			  e.hide();		  
+			  setTimeout(function() {
+			    e.fadeIn(300);				    
+			  }, 100 + i * delay)
+			})
+			el.fadeOut(1000);
+			setTimeout(function(){
+				el.html("");
+				el.animate({left:"200px",top:"10",zoom:1}, 0);
+				el.fadeIn(0);
+			},copy_1_timeOut);			
+			setTimeout(copy_1, hide_timeOut);						
+	    }
+		
+		function copy_2() {
+			var textElements2 = text2.split("").map(function(c) {
+			  return $('<span id="' + c + '">' + c + '</span>');
+			});
+
+			var e2 = $('#copy-2');					
+			var delay = 100; // Tune this for different letter delays.
+			textElements2.forEach(function(e, i) {
+			  e2.append(e);
+			  e.hide();		  
+			  setTimeout(function() {
+			    e.fadeIn(200);		
+			  }, copy_1_timeOut + i * delay)
+			})
+			e2.delay(copy_1_timeOut+copy_2_timeOut);
+			e2.fadeOut(500);
+			setTimeout(function(){
+				e2.html("");
+				e2.fadeIn(0);				
+			},copy_1_timeOut+copy_2_timeOut+1000);
+			setTimeout(copy_2, hide_timeOut);
+		}
+
+		function logo(){
+			var e3 = $('#logo');
+			setTimeout(function(){
+				e3.show();				
+				e3.animate({
+					left: '180px',									
+				});
+			},logo_timeOut);
+			setTimeout(logo, hide_timeOut);
+		}
+
+		function title(){
+			var e4 = $('#title');
+			setTimeout(function(){
+				e4.slideDown("show");
+			},title_timeOut);
+			setTimeout(title, hide_timeOut);
+		}
+
+		function button(){
+			var e5 = $('#button');
+			setTimeout(function(){
+				e5.show();
+				e5.animate({
+					top: '10px',
+				});
+			},button_timeOut);
+			setTimeout(button, hide_timeOut);
+		}
+
+		function hide_ele() {
+			var e3 = $('#logo');
+			var e4 = $('#title');
+			var e5 = $('#button');
+			setTimeout(function(){
+				e3.hide();
+				e3.css({left: '100px'})
+				e4.hide();
+				e5.hide();
+				e5.css({top: '100%'})
+			},hide_timeOut);
+			setTimeout(hide_ele, hide_timeOut);
+		}		
+
+
+	    
+	</script>
+</body>
+</html>
